@@ -5,7 +5,8 @@ import SpeechRecognition, {
 import { useSpeechSynthesis } from "react-speech-kit";
 export default function Chatbox() {
   const [message, setMessage] = useState("");
-  const [value, setValue] = useState("Hello Bad Guys");
+  const [messages, setMessages] = useState([]);
+  const [value, setValue] = useState("Hello There , How can I help You ?");
   const { speak } = useSpeechSynthesis();
   const commands = [
     // {
@@ -15,8 +16,11 @@ export default function Chatbox() {
     // },
     {
       command: ["Hello"],
-      callback: ({ command }) => speak({ text: value }),
-      matchInterim: true,
+      callback: ({ command }) => {
+        speak({ text: value });
+        setMessage("Hello There , How can I help You ?");
+      },
+      // matchInterim: true,
     },
     {
       command: "Beijing",
@@ -41,32 +45,59 @@ export default function Chatbox() {
     },
   ];
 
-  const { transcript } = useSpeechRecognition({ commands });
-  SpeechRecognition.startListening({ continuous: true, language: "en-IN" });
+  const { transcript,resetTranscript } = useSpeechRecognition({ commands });
+  // SpeechRecognition.startListening({ continuous: true, language: "en-IN" });
   // if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
   //   console.log("not supported");
   //   return null;
   // }
+  setTimeout(() => {
+    setMessages({ jarvis: "Hello There" });
+    console.log("hello");
+  }, 3000);
+
   return (
     <div className="px-12 h-full w-full">
       <div className="text-white">
         <p>{message}</p>
         <p>{transcript}</p>
       </div>
-      <div className="relative bg-gray-50 shadow-xl rounded-2xl h-full w-full flex flex-col overflow-y-auto">
-        <div className="rounded-2xl w-full px-8 py-4 flex flex-col space-y-5 overflow-hidden text-xs text-gray-100">
-          <div className="bg-indigo-400 rounded-2xl w-4/6 px-3 py-3 rounded-bl-none">
-            Hello Sir, How can I help you ?
-          </div>
-          <div className="bg-pink-400 rounded-2xl w-4/6 self-end rounded-br-none px-3 py-3 ">
-            How are You?
-          </div>
-          <div className="bg-indigo-400 rounded-2xl w-4/6 px-3 py-3 rounded-bl-none">
-            I am fine , Thankyou sir. How about You?
-          </div>
-          <div className="bg-pink-400 rounded-2xl w-4/6 self-end rounded-br-none px-3 py-3">
-            I am also fine.
-          </div>
+      <div className="relative bg-gray-50 shadow-xl rounded-2xl h-full w-full flex flex-col items-center justify-center">
+        <div className="rounded-2xl w-full px-8 py-4 flex flex-col space-y-5 overflow-y-auto scrollbar-w-2 scrollbar-track-gray-lighter scrollbar-track-gray-rounded scrollbar-thumb-rounded scrollbar-thumb-gray scrolling-touch max-h-80 text-xs text-gray-100">
+          {!messages ? (
+            <>
+              <div className="bg-indigo-400 rounded-2xl w-4/6 px-3 py-3 rounded-bl-none">
+                Hello Sir, How can I help you ?
+              </div>
+              <div className="bg-pink-400 rounded-2xl w-4/6 self-end rounded-br-none px-3 py-3 ">
+                How are You?
+              </div>
+              <div className="bg-indigo-400 rounded-2xl w-4/6 px-3 py-3 rounded-bl-none">
+                I am fine , Thankyou sir. How about You?
+              </div>
+              <div className="bg-pink-400 rounded-2xl w-4/6 self-end rounded-br-none px-3 py-3">
+                I am also fine.
+              </div>
+              <div className="bg-indigo-400 rounded-2xl w-4/6 px-3 py-3 rounded-bl-none">
+                I am fine , Thankyou sir. How about You?
+              </div>
+              <div className="bg-pink-400 rounded-2xl w-4/6 self-end rounded-br-none px-3 py-3">
+                I am also fine.
+              </div>
+              <div className="bg-indigo-400 rounded-2xl w-4/6 px-3 py-3 rounded-bl-none">
+                I am fine , Thankyou sir. How about You?
+              </div>
+              <div className="bg-pink-400 rounded-2xl w-4/6 self-end rounded-br-none px-3 py-3">
+                I am also fine.
+              </div>
+            </>
+          ) : (
+            <div className="justify-center items-center text-purple-600 flex">
+              <p className="text-2xl font-poppins font-bold">
+                Welcome To Jarvis !!!
+              </p>
+            </div>
+          )}
         </div>
         {/* Button Part */}
         <div className="bg-gray-200 absolute bottom-0 rounded-b-2xl w-full py-4 px-8 flex flex-row justify-between">
@@ -86,16 +117,26 @@ export default function Chatbox() {
                 />
               </svg>
             </div>
-            <p className="px-2 text-sm text-gray-600">Say "Hello Jarvis"</p>
+            <p className="px-2 text-xs text-gray-600 whitespace-nowrap">
+              Say "Hello"
+            </p>
           </div>
-          <svg
-            className="w-6 h-6 transform rotate-90 hover:text-gray-700 cursor-pointer"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-          </svg>
+          <form className="flex flex-row w-5/6 justify-around space-x-3">
+            <input
+              type="text"
+              className="rounded-full w-full px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-indigo-400"
+            />
+            <button type="submit">
+              <svg
+                className="w-6 h-6 transform rotate-90 hover:text-gray-700 cursor-pointer"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+              </svg>
+            </button>
+          </form>
         </div>
       </div>
     </div>
