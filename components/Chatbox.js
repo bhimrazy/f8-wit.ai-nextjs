@@ -16,7 +16,7 @@ export default function Chatbox() {
   const commands = [
     {
       command: 'write *',
-      callback: (mesg) => setMessage(msg)
+      callback: (mesg) => setMessage(mesg)
     },
     // {
     //   command: ["Hello", "Hi"],
