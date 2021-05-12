@@ -14,6 +14,10 @@ export default function Chatbox() {
     type: "jarvis",
   };
   const commands = [
+    {
+      command: 'write *',
+      callback: (mesg) => setMessage(msg)
+    },
     // {
     //   command: ["Hello", "Hi"],
     //   callback: ({ command }) => setMessage(`Hi there! You said: "${command}"`),
