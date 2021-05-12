@@ -41,13 +41,13 @@ export default function Chatbox() {
     },
   ];
   const { transcript, resetTranscript } = useSpeechRecognition({ commands });
-  if (mic) {
+ // if (mic) {
     SpeechRecognition.startListening({ continuous: true, language: "en-IN" });
-  }
-  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    console.log("not supported");
-    return null;
-  }
+//   }
+//   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+//     console.log("not supported");
+//     return null;
+//   }
   const newMessage = {
     message: "Hello There , How can I help You ?",
     type: "jarvis",
